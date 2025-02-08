@@ -33,6 +33,5 @@ build/
 .vscode/
 
 ### Custom ###
-.env.example
 /src/main/resources/.env
 
