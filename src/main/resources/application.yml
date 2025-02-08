@@ -1,0 +1,65 @@
+spring:
+    jpa:
+      #database-platform: org.hibernate.dialect.PostgreSQLDialect
+      show-sql: true
+      hibernate:
+          # if model changes' auto update
+        ddl-auto: update
+
+    datasource:
+      #platform: postgres
+  #url:
+      #username:
+      #password:
+      #driverClassName: org.postgresql.Driver
+
+      #  Mariadb
+        url: jdbc:mariadb://localhost:3306/gribble
+        username: gribble
+        password: yRWl25[qUkb[F4JG
+
+    security:
+      oauth2:
+        client:
+          registration:
+            google:
+              clientId: 5014057553-8gm9um6vnli3cle5rgigcdjpdrid14m9.apps.googleusercontent.com
+              clientSecret: tWZKVLxaD_ARWsriiiUFYoIk
+              redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+              scope:
+                - email
+                - profile
+            facebook:
+              clientId: 121189305185277
+              clientSecret: 42ffe5aa7379e8326387e0fe16f34132
+              redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+              scope:
+                - email
+                - public_profile
+          provider:
+            facebook:
+              authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
+              tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
+              userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
+app:
+  auth:
+    # my token secret
+    tokenSecret: ${TOKEN_SECRET}
+    tokenExpirationMsec: 3600000 # 1 hour
+    refreshTokenExpirationMsec: 86400000 # 24 hour
+    tokenType: "Bearer"
+  cors:
+    # allowed links that can make request to this service
+    #toDO: change for our services links
+    allowedOrigins: http://localhost:3000,http://localhost:8080,http://127.0.0.1:5173,  http://localhost:5173, https://gribble-ua.netlify.app, https://www.postman.com/
+  oauth2:
+    # After successfully authenticating with the OAuth2 Provider,
+    # we'll be generating an auth token for the user and sending the token to the
+    # redirectUri mentioned by the client in the /oauth2/authorize request.
+    # We're not using cookies because they won't work well in mobile clients.
+    authorizedRedirectUris:
+      - http://localhost:3000/oauth2/redirect
+      - http://127.0.0.1:5173/oauth2/redirect
+      - https://gribble-ua.netlify.app/en/ouath2/redirect
+      - myandroidapp://oauth2/redirect
+      - myiosapp://oauth2/redirect
